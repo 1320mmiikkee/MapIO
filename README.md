@@ -70,4 +70,4 @@ MapIO is a mobile application designed to help users navigate the public bus sys
 ## Support
 
 For any issues or questions, please contact:
-[Your Contact Information] 
+[mgonz01@ucy.ac.cy] 
