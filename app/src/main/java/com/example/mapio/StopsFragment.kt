@@ -5,17 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mapio.data.TransportDatabase
-import kotlinx.coroutines.launch
+import com.example.mapio.data.NicosiaBusRoutes
 
 class StopsFragment : Fragment() {
     interface OnStopSelectedListener {
         fun onStopSelected(stop: com.example.mapio.data.BusStop)
     }
-    private lateinit var database: TransportDatabase
     private lateinit var recyclerView: RecyclerView
     private var listener: OnStopSelectedListener? = null
 
@@ -39,18 +36,14 @@ class StopsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        database = TransportDatabase.getDatabase(requireContext())
         recyclerView = view.findViewById(R.id.stopsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         loadStops()
     }
 
     private fun loadStops() {
-        lifecycleScope.launch {
-            val stops = database.transportDao().getAllBusStops()
-            recyclerView.adapter = StopsAdapter(stops) { stop ->
-                listener?.onStopSelected(stop)
-            }
+        recyclerView.adapter = StopsAdapter(NicosiaBusRoutes.STOPS) { stop ->
+            listener?.onStopSelected(stop)
         }
     }
 

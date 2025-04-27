@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mapio.data.TransportDatabase
-import kotlinx.coroutines.launch
+import com.example.mapio.data.NicosiaBusRoutes
 
 class ScheduleFragment : Fragment() {
-    private lateinit var database: TransportDatabase
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -25,19 +22,14 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        database = TransportDatabase.getDatabase(requireContext())
         recyclerView = view.findViewById(R.id.scheduleRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         loadScheduleData()
     }
 
     private fun loadScheduleData() {
-        lifecycleScope.launch {
-            val routes = database.transportDao().getAllBusRoutes()
-            val stops = database.transportDao().getAllBusStops()
-            recyclerView.adapter = ScheduleAdapter(routes, stops) { route ->
-                openScheduleDetail(route.name)
-            }
+        recyclerView.adapter = ScheduleAdapter(NicosiaBusRoutes.ROUTES, NicosiaBusRoutes.STOPS) { route ->
+            openScheduleDetail(route.name)
         }
     }
 

@@ -7,12 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mapio.data.BusStop
-import com.example.mapio.data.TransportDatabase
-import kotlinx.coroutines.launch
+import com.example.mapio.data.NicosiaBusRoutes
 
 class ScheduleDetailFragment : Fragment() {
     private var routeName: String? = null
@@ -51,24 +48,19 @@ class ScheduleDetailFragment : Fragment() {
     }
 
     private fun loadScheduleData() {
-        lifecycleScope.launch {
-            val database = TransportDatabase.getDatabase(requireContext())
-            val routes = database.transportDao().getAllBusRoutes()
-            val route = routes.find { it.name == routeName }
+        val route = NicosiaBusRoutes.ROUTES.find { it.name == routeName }
+        
+        if (route != null) {
+            // Set title
+            titleTextView.text = route.name
             
-            if (route != null) {
-                // Set title
-                titleTextView.text = route.name
-                
-                // Get stops for this route
-                val allStops = database.transportDao().getAllBusStops()
-                val routeStops = route.stops.mapNotNull { stopId ->
-                    allStops.find { it.id == stopId }
-                }
-                
-                // Create adapter with stops and schedule
-                recyclerView.adapter = ScheduleDetailAdapter(routeStops, route.schedule)
+            // Get stops for this route
+            val routeStops = route.stops.mapNotNull { stopId ->
+                NicosiaBusRoutes.STOPS.find { it.id == stopId }
             }
+            
+            // Create adapter with stops and schedule
+            recyclerView.adapter = ScheduleDetailAdapter(routeStops, route.schedule)
         }
     }
 
