@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mapio</string>
+    <string name="routes">Routes</string>
+    <string name="stops">Stops</string>
+    <string name="schedule">Schedule</string>
+    <string name="notifications">Notifications</string>
+</resources>

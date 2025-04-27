@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_routes"
+        android:icon="@drawable/ic_route"
+        android:title="@string/routes" />
+    <item
+        android:id="@+id/navigation_stops"
+        android:icon="@drawable/ic_stop"
+        android:title="@string/stops" />
+    <item
+        android:id="@+id/navigation_schedule"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/schedule" />
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications" />
+</menu> 
